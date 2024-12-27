@@ -1,0 +1,13 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-Onyx.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Users\19980\Documents\Unreal Projects\Onyx\Intermediate\Build\Win64\x64\OnyxEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.obj"
+"C:\Users\19980\Documents\Unreal Projects\Onyx\Intermediate\Build\Win64\x64\UnrealEditor\Development\Onyx\Onyx.cpp.obj"
+"C:\Users\19980\Documents\Unreal Projects\Onyx\Intermediate\Build\Win64\x64\UnrealEditor\Development\Onyx\PerModuleInline.gen.cpp.obj"
+"C:\Users\19980\Documents\Unreal Projects\Onyx\Intermediate\Build\Win64\x64\UnrealEditor\Development\Onyx\Default.rc2.res"
+/OUT:"C:\Users\19980\Documents\Unreal Projects\Onyx\Intermediate\Build\Win64\x64\UnrealEditor\Development\Onyx\UnrealEditor-Onyx.lib"

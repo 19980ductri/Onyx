@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "Onyx",
+			"Path": "..\\Source\\Onyx.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "OnyxEditor",
+			"Path": "..\\Source\\OnyxEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
