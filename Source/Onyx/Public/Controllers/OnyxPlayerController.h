@@ -14,5 +14,7 @@ class ONYX_API AOnyxPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
+public:
+	
 	
 };
