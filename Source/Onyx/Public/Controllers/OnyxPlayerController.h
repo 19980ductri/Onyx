@@ -15,6 +15,6 @@ class ONYX_API AOnyxPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
-	
-	
+
+	virtual void SetupInputComponent() override;
 };

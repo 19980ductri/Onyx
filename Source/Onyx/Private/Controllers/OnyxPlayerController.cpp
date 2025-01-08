@@ -2,3 +2,9 @@
 
 
 #include "Onyx/Public/Controllers/OnyxPlayerController.h"
+
+void AOnyxPlayerController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+	
+}
