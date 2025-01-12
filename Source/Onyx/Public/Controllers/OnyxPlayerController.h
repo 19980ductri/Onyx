@@ -3,9 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InputActionValue.h"
 #include "GameFramework/PlayerController.h"
 #include "OnyxPlayerController.generated.h"
 
+class UOnyxInputConfig;
 /**
  * 
  */
@@ -16,5 +18,16 @@ class ONYX_API AOnyxPlayerController : public APlayerController
 
 public:
 
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UOnyxInputConfig> OnyxInputConfig;
+
+	
+	
+protected:
 	virtual void SetupInputComponent() override;
+
+private:
+	void Move(const FInputActionValue& InputActionValue);
+	void Look(const FInputActionValue& InputActionValue);
+	
 };
