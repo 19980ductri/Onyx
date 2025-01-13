@@ -10,12 +10,12 @@ class UCameraComponent;
 class USpringArmComponent;
 
 UCLASS()
-class ONYX_API AOnyxPlayerCharacter : public AOnyxCharacterBase
+class ONYX_API AOnyxHeroCharacter : public AOnyxCharacterBase
 {
 	GENERATED_BODY()
 
 public:
-	AOnyxPlayerCharacter();
+	AOnyxHeroCharacter();
 protected:
 	
 

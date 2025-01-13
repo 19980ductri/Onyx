@@ -13,14 +13,13 @@ void AOnyxPlayerController::SetupInputComponent()
 	Super::SetupInputComponent();
 
 	const ULocalPlayer* LocalPlayer = GetLocalPlayer();
-
-	UEnhancedInputLocalPlayerSubsystem* InputLocalPlayerSubsystem = LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>();
+	UEnhancedInputLocalPlayerSubsystem* InputLocalPlayerSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer);
 	check(InputLocalPlayerSubsystem);
 
 	InputLocalPlayerSubsystem->AddMappingContext(OnyxInputConfig->DefaultInputMappingContext, 0);
 
-	UOnyxInputComponent* OnyxInputComponent = Cast<UOnyxInputComponent>(InputComponent);
-	check(OnyxInputComponent);
+	UOnyxInputComponent* OnyxInputComponent = CastChecked<UOnyxInputComponent>(InputComponent);
+	
 	OnyxInputComponent->BindNativeAction(OnyxInputConfig, ETriggerEvent::Triggered, this, &ThisClass::Move, OnyxGameplayTag::InputTag_Move);
 	OnyxInputComponent->BindNativeAction(OnyxInputConfig, ETriggerEvent::Triggered, this, &ThisClass::Look, OnyxGameplayTag::InputTag_Look);
 
@@ -28,14 +27,14 @@ void AOnyxPlayerController::SetupInputComponent()
 
 void AOnyxPlayerController::Move(const FInputActionValue& InputActionValue)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Move"))
+	
 	const FVector2d MovementVector = InputActionValue.Get<FVector2d>();
 	const FRotator MovementRot(0, GetControlRotation().Yaw, 0);
 
 	if (MovementVector.Y != 0.f)
 	{
-		const FVector ForwardVector = MovementRot.RotateVector(FVector::ForwardVector);
-		GetCharacter()->AddMovementInput(ForwardVector, MovementVector.Y);
+		const FVector ForwardDirection = MovementRot.RotateVector(FVector::ForwardVector);
+		GetCharacter()->AddMovementInput(ForwardDirection, MovementVector.Y);
 	}
 
 	if (MovementVector.X != 0.f)
@@ -43,7 +42,6 @@ void AOnyxPlayerController::Move(const FInputActionValue& InputActionValue)
 		const FVector RightDirection = MovementRot.RotateVector(FVector::RightVector);
 		GetCharacter()->AddMovementInput(RightDirection, MovementVector.X);
 	}
-	
 	
 }
 

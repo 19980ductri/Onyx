@@ -8,7 +8,7 @@
 
 
 // Sets default values
-AOnyxPlayerCharacter::AOnyxPlayerCharacter()
+AOnyxHeroCharacter::AOnyxHeroCharacter()
 {
 	//of the root mesh
 	MeshComponentName = FName("Root Mesh Component");

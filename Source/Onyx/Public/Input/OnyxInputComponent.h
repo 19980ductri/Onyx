@@ -11,7 +11,7 @@
 
 class UOnyxInputConfig;
 
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS()
 class ONYX_API UOnyxInputComponent : public UEnhancedInputComponent
 {
 	GENERATED_BODY()
