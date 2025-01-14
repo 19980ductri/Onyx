@@ -8,9 +8,16 @@
 
 class UCharacterMovementComponent;
 class AOnyxCharacterBase;
-/**
- * 
- */
+
+
+UENUM(Blueprintable, BlueprintType)
+enum ERotationMode
+{
+	OrientationToMovement,
+	Strafing
+};
+
+
 UCLASS()
 class ONYX_API UOnyxCharacterAnimInstance : public UOnyxAnimInstanceBase
 {
@@ -24,6 +31,18 @@ public:
 protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
+	FVector VelocityLastFrame;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
+	FVector Velocity;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
+	FVector Acceleration;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
+	FVector AccelerationLastFrame;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
 	float GroundSpeed;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
@@ -32,6 +51,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
 	float LocomotionDirection;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
+	TEnumAsByte<ERotationMode> RotationMode;
+	
 	UPROPERTY()
 	AOnyxCharacterBase* OwningCharacter;
 

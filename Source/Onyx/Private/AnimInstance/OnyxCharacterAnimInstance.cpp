@@ -22,15 +22,25 @@ void UOnyxCharacterAnimInstance::NativeInitializeAnimation()
 void UOnyxCharacterAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeThreadSafeUpdateAnimation(DeltaSeconds);
-
+	
 	if (!OwningCharacter || !OwningCharacterMovement)
 	{
 		return;
 	}
+	RotationMode = ERotationMode::OrientationToMovement;
+	AccelerationLastFrame = Acceleration;
+	Acceleration = OwningCharacterMovement->GetCurrentAcceleration();
+	
+	VelocityLastFrame = Velocity;
+	Velocity = OwningCharacterMovement->Velocity;
 
+	
+	
 	GroundSpeed = OwningCharacter->GetVelocity().Size2D();
 	bHasAcceleration = OwningCharacterMovement->GetCurrentAcceleration().SizeSquared2D() > 0.f;
 
 	LocomotionDirection = UKismetAnimationLibrary::CalculateDirection(OwningCharacter->GetVelocity(), OwningCharacter->GetActorRotation());
 	
 }
+
+
