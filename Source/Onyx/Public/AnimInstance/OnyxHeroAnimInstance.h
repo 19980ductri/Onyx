@@ -48,13 +48,15 @@ protected:
 	float GetTrajectoryTurnAngle();
 	
 	void UpdateMotionMatchingEssentialValues(float DeltaSeconds);
-	UFUNCTION(BlueprintCallable, Category = "AnimData|LocomotionData")
+
+	
+	UFUNCTION(BlueprintPure, Category = "AnimData|LocomotionData", meta= (BlueprintThreadSafe = "true"))
 	bool IsPivoting();
 	
-	UFUNCTION(BlueprintCallable, Category = "AnimData|LocomotionData")
+	UFUNCTION(BlueprintPure, Category = "AnimData|LocomotionData", meta= (BlueprintThreadSafe = "true"))
 	bool IsStarting();
 
-	UFUNCTION(BlueprintCallable, Category = "AnimData|LocomotionData")
+	UFUNCTION(BlueprintPure, Category = "AnimData|LocomotionData", meta= (BlueprintThreadSafe = "true"))
 	bool IsMoving();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData")

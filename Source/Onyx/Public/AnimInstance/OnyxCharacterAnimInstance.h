@@ -17,6 +17,14 @@ enum ERotationMode
 	Strafing
 };
 
+UENUM(Blueprintable, BlueprintType)
+enum EMovementState
+{
+	Idle,
+	Moving
+};
+
+
 
 UCLASS()
 class ONYX_API UOnyxCharacterAnimInstance : public UOnyxAnimInstanceBase
@@ -28,7 +36,10 @@ public:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeThreadSafeUpdateAnimation(float DeltaSeconds) override;
 
+	
 protected:
+
+	void UpdateMovementState();
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
 	FVector VelocityLastFrame;
@@ -53,6 +64,10 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
 	TEnumAsByte<ERotationMode> RotationMode;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
+	TEnumAsByte<EMovementState> MovementState;
+	
 	
 	UPROPERTY()
 	AOnyxCharacterBase* OwningCharacter;

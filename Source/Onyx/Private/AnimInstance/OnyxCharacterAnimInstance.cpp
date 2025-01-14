@@ -43,4 +43,9 @@ void UOnyxCharacterAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeco
 	
 }
 
+void UOnyxCharacterAnimInstance::UpdateMovementState()
+{
+	
+}
+
 

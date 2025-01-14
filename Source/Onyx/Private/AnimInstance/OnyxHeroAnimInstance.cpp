@@ -19,8 +19,13 @@ void UOnyxHeroAnimInstance::NativeInitializeAnimation()
 void UOnyxHeroAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeThreadSafeUpdateAnimation(DeltaSeconds);
+	if (OwningHeroCharacter == nullptr)
+	{
+		return;
+	}
 	UpdateTrajectory(DeltaSeconds);
 	UpdateMotionMatchingEssentialValues(DeltaSeconds);
+	MovementState = IsMoving() ? Moving : Idle;
 }
 
 void UOnyxHeroAnimInstance::UpdateTrajectory(float DeltaSeconds)
@@ -81,7 +86,6 @@ bool UOnyxHeroAnimInstance::IsPivoting()
 	
 	if (IsMoving() && bCanBePivoting)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("is pivoting true"))
 		return true;
 	}
 	return false;
@@ -89,13 +93,27 @@ bool UOnyxHeroAnimInstance::IsPivoting()
 
 bool UOnyxHeroAnimInstance::IsStarting()
 {
-	const bool bHavingAttemptToMove = UKismetMathLibrary::GreaterEqual_DoubleDouble(TrajectoryFutureVelocity.Size2D(), Velocity.Size2D());
+	bool bHavingAttemptToMove = false;
+
+	if (TrajectoryFutureVelocity.Size2D() >= Velocity.Size2D() + 100.f)
+	{
+		bHavingAttemptToMove = true;
+	}
+	
+	GEngine->AddOnScreenDebugMessage(0, 1.f, FColor::Yellow, FString::Printf(TEXT("TrajectoryFutureVelocity: %f"), TrajectoryFutureVelocity.Size2D()));
+	GEngine->AddOnScreenDebugMessage(1, 1.f, FColor::Yellow, FString::Printf(TEXT("Veloctity: %f"),  Velocity.Size2D() + 100.f));
+	
 	if (IsMoving() && bHavingAttemptToMove)
 	{
-		UE_LOG(LogTemp,Warning, TEXT("is starting to move: true"))
+		GEngine->AddOnScreenDebugMessage(2, 1.f, FColor::Yellow, FString::Printf(TEXT("is starting: true")));
 		return true;
 	}
-	return false;
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(2, 1.f, FColor::Yellow, FString::Printf(TEXT("is starting: false")));
+	
+		return false;	
+	}
 }
 
 bool UOnyxHeroAnimInstance::IsMoving()
@@ -103,9 +121,8 @@ bool UOnyxHeroAnimInstance::IsMoving()
 	const bool bHasVelocity = UKismetMathLibrary::NotEqual_VectorVector(Velocity, FVector::Zero(), 0.1);
 	const bool bHasFutureTrajectoryVelocity = UKismetMathLibrary::NotEqual_VectorVector(TrajectoryFutureVelocity, FVector::Zero(), 10.f);
 	const bool bHavingAccel = UKismetMathLibrary::NotEqual_VectorVector(Acceleration, FVector::Zero(), 0.f);
-	if (bHasVelocity && bHasFutureTrajectoryVelocity && bHavingAccel)
+	if (bHasVelocity && bHasFutureTrajectoryVelocity && bHasAcceleration)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("IsMoving == true"))
 		return true;
 	}
 	return false;
