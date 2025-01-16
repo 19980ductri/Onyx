@@ -39,6 +39,9 @@ public:
 	
 protected:
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, meta=(BlueprintThreadSafe = "true"))
+	FVector CalculateRelativeAccelerationAmount();
+
 	void UpdateMovementState();
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
@@ -47,6 +50,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
 	FVector Velocity;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData")
+	FVector VelocityAcceleration;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
 	FVector Acceleration;
 
@@ -74,6 +80,6 @@ protected:
 
 	UPROPERTY()
 	UCharacterMovementComponent* OwningCharacterMovement;
-	
+
 	
 };

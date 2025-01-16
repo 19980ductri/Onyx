@@ -19,8 +19,6 @@ public:
 protected:
 	
 
-	
-
 private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Camera", meta=(AllowPrivateAccess = "true"))

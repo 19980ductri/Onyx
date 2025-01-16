@@ -111,7 +111,6 @@ bool UOnyxHeroAnimInstance::IsStarting()
 	else
 	{
 		GEngine->AddOnScreenDebugMessage(2, 1.f, FColor::Yellow, FString::Printf(TEXT("is starting: false")));
-	
 		return false;	
 	}
 }
