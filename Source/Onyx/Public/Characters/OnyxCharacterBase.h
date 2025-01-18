@@ -17,13 +17,19 @@ public:
 	AOnyxCharacterBase();
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-
+	virtual UAttributeSet* GetAttributeSet() const;
 
 protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> WeaponMesh;
 	
+
+	virtual void InitAbilityInfo();
+	
+
+	void SetAbilitySystemComponent(UAbilitySystemComponent* InAsc);
+	void SetAttributeSet(UAttributeSet* InAsc);
 private:
 
 	UPROPERTY()
@@ -31,5 +37,6 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+	
 	
 };

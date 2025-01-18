@@ -18,3 +18,25 @@ UAbilitySystemComponent* AOnyxCharacterBase::GetAbilitySystemComponent() const
 	}
 	return nullptr;
 }
+
+UAttributeSet* AOnyxCharacterBase::GetAttributeSet() const
+{
+	if (AttributeSet)
+		return AttributeSet;
+	return nullptr;
+}
+
+void AOnyxCharacterBase::InitAbilityInfo()
+{
+	
+}
+
+void AOnyxCharacterBase::SetAbilitySystemComponent(UAbilitySystemComponent* InAsc)
+{
+	AbilitySystemComponent = InAsc;
+}
+
+void AOnyxCharacterBase::SetAttributeSet(class UAttributeSet* InAsc)
+{
+	AttributeSet = InAsc;
+}

@@ -9,6 +9,9 @@ class ONYX_API UOnyxAbilitySystemComponent : public UAbilitySystemComponent
  GENERATED_BODY()
 
 public:
-  
+
+ void InitAbilitySystemComponent();
+
+ 
  
 };

@@ -19,15 +19,16 @@ class ONYX_API AOnyxPlayerState : public APlayerState
 public:
 	AOnyxPlayerState();
 	FORCEINLINE UOnyxAbilitySystemComponent* GetOnyxAbilitySystemComponent() const { return OnyxAbilitySystemComponent; }
-	FORCEINLINE UOnyxAttributeSet* GetOnyxAttributes() const { return OnyxAttributeSet; }
+	FORCEINLINE UOnyxAttributeSet* GetOnyxAttributeSet() const { return OnyxAttributeSet; }
+
 	
 protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "OnyxPlayerState", meta = (AllowPrivateAccess = "true"))
-	UOnyxAbilitySystemComponent* OnyxAbilitySystemComponent;
+	TObjectPtr<UOnyxAbilitySystemComponent> OnyxAbilitySystemComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "OnyxPlayerState", meta = (AllowPrivateAccess = "true"))
-	UOnyxAttributeSet* OnyxAttributeSet;
+	TObjectPtr<UOnyxAttributeSet> OnyxAttributeSet;
 	
 	
 };

@@ -16,11 +16,21 @@ class ONYX_API AOnyxHeroCharacter : public AOnyxCharacterBase
 
 public:
 	AOnyxHeroCharacter();
-protected:
-	
 
+	
+protected:
+
+	virtual void PossessedBy(AController* NewController) override;
+	virtual void InitAbilityInfo() override;
+
+	virtual void BeginPlay() override;
+	
+	
 private:
 
+	virtual void OnRep_PlayerState() override;
+	
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Camera", meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<USpringArmComponent> CameraBoom;
 

@@ -9,5 +9,11 @@
 AOnyxPlayerState::AOnyxPlayerState()
 {
 	OnyxAbilitySystemComponent = CreateDefaultSubobject<UOnyxAbilitySystemComponent>(FName("Onyx Ability System Component"));
+	OnyxAbilitySystemComponent->SetIsReplicated(true);
+	
+	OnyxAbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
+
 	OnyxAttributeSet = CreateDefaultSubobject<UOnyxAttributeSet>(FName("Onyx Attribute Set"));
+
+	SetNetUpdateFrequency(100.f);
 }

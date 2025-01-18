@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemComponent.h"
 #include "AttributeSet.h"
 #include "GameplayEffectTypes.h"
 #include "OnyxAttributeSet.generated.h"
@@ -22,6 +23,7 @@ USTRUCT()
 struct FEffectProperties
 {
 	GENERATED_BODY()
+	
 	FEffectProperties(){}
 
 	FGameplayEffectContextHandle EffectContextHandle;
@@ -74,7 +76,22 @@ protected:
 
 	TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes;
 	
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_Health, Category= "Vital Attributes")
+	FGameplayAttributeData Health;
+	ATTRIBUTE_ACCESSORS(UOnyxAttributeSet, Health);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing= OnRep_MaxHealth, Category= "Vital Attributes")
+	FGameplayAttributeData MaxHealth;
+	ATTRIBUTE_ACCESSORS(UOnyxAttributeSet, MaxHealth);
+
+
 	
-	
+private:
+	UFUNCTION()
+	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
+
+	UFUNCTION()
+	void	 OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
 	
 };

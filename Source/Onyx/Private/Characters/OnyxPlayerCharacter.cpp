@@ -3,8 +3,11 @@
 
 #include "Characters/OnyxPlayerCharacter.h"
 
+#include "AbilitySystem/OnyxAbilitySystemComponent.h"
+#include "AbilitySystem/OnyxAttributeSet.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Player/OnyxPlayerState.h"
 
 
 // Sets default values
@@ -25,4 +28,38 @@ AOnyxHeroCharacter::AOnyxHeroCharacter()
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>("Camera");
 	CameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	
+}
+
+void AOnyxHeroCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+	InitAbilityInfo();
+	
+}
+
+void AOnyxHeroCharacter::InitAbilityInfo()
+{
+	AOnyxPlayerState* OnyxPlayerState = GetPlayerState<AOnyxPlayerState>();
+
+	check(OnyxPlayerState);
+	
+	OnyxPlayerState->GetOnyxAbilitySystemComponent()->InitAbilityActorInfo(OnyxPlayerState, this);
+	
+	SetAbilitySystemComponent(OnyxPlayerState->GetOnyxAbilitySystemComponent());
+	SetAttributeSet(OnyxPlayerState->GetOnyxAttributeSet());
+
+	check(GetAbilitySystemComponent());
+	check(GetAttributeSet());
+	
+}
+
+void AOnyxHeroCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
+void AOnyxHeroCharacter::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+	InitAbilityInfo();
 }

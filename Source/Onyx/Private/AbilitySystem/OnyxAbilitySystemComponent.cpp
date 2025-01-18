@@ -4,4 +4,7 @@
 #include "AbilitySystem/OnyxAbilitySystemComponent.h"
 
 
-
+void UOnyxAbilitySystemComponent::InitAbilitySystemComponent()
+{
+	
+}
