@@ -10,10 +10,11 @@
 
 class UGameplayAbility;
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FOnyxAbilityInfo
 {
 	GENERATED_BODY()
+
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "OnyxAbilityDataSet")
 	TSubclassOf<UGameplayAbility> AbilityClass;
@@ -35,7 +36,7 @@ struct FOnyxAbilityInfo
 };
 
 
-UCLASS()
+UCLASS(Blueprintable, BlueprintType)
 class ONYX_API UOnyxAbilityDataSet : public UDataAsset
 {
 	GENERATED_BODY()
