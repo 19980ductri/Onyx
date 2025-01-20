@@ -28,9 +28,12 @@ void UOnyxCharacterAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeco
 	{
 		return;
 	}
+	LocomotionDirection = UKismetAnimationLibrary::CalculateDirection(OwningCharacter->GetVelocity(), OwningCharacter->GetActorRotation());
 	RotationMode = ERotationMode::OrientationToMovement;
 	AccelerationLastFrame = Acceleration;
 	Acceleration = OwningCharacterMovement->GetCurrentAcceleration();
+
+	
 	
 	VelocityLastFrame = Velocity;
 	Velocity = OwningCharacterMovement->Velocity;
@@ -40,7 +43,7 @@ void UOnyxCharacterAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeco
 	GroundSpeed = OwningCharacter->GetVelocity().Size2D();
 	bHasAcceleration = OwningCharacterMovement->GetCurrentAcceleration().SizeSquared2D() > 0.f;
 
-	LocomotionDirection = UKismetAnimationLibrary::CalculateDirection(OwningCharacter->GetVelocity(), OwningCharacter->GetActorRotation());
+
 	
 }
 

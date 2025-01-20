@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "Animation/AnimInstance.h"
 #include "OnyxAnimInstanceBase.generated.h"
 
@@ -16,5 +17,6 @@ class ONYX_API UOnyxAnimInstanceBase : public UAnimInstance
 
 protected:
 
+	bool DoesOwnerHaveTag(const FGameplayTag& Tag) const;
 	
 };

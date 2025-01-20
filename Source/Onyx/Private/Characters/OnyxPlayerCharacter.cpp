@@ -13,20 +13,18 @@
 // Sets default values
 AOnyxHeroCharacter::AOnyxHeroCharacter()
 {
-	//of the root mesh
-	MeshComponentName = FName("Root Mesh Component");
-
+	
 	//auto retarget from the root mesh through ABP_GenericRetarget
 	MainCharacterMesh = CreateDefaultSubobject<USkeletalMeshComponent>("MainCharacterMesh");
 	MainCharacterMesh->SetupAttachment(GetMesh());
 	
-	CameraBoom = CreateDefaultSubobject<USpringArmComponent>("CameraBoom");
+	/*CameraBoom = CreateDefaultSubobject<USpringArmComponent>("CameraBoom");
 	CameraBoom->SetupAttachment(GetRootComponent());
 	CameraBoom->SetUsingAbsoluteRotation(true);
 	CameraBoom->bDoCollisionTest = false;
 	
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>("Camera");
-	CameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
+	CameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);*/
 	
 }
 
