@@ -17,6 +17,7 @@ class ONYX_API UOnyxAnimInstanceBase : public UAnimInstance
 
 protected:
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool DoesOwnerHaveTag(const FGameplayTag& Tag) const;
 	
 };
