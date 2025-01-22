@@ -22,6 +22,7 @@ class ONYX_API UOnyxHeroAnimInstance : public UOnyxCharacterAnimInstance
 public:
 
 	virtual void NativeInitializeAnimation() override;
+	virtual void UpdateStates() override;
 	virtual void NativeThreadSafeUpdateAnimation(float DeltaSeconds) override;
 	
 protected:
@@ -54,10 +55,10 @@ protected:
 	bool IsPivoting();
 	
 	UFUNCTION(BlueprintPure, Category = "AnimData|LocomotionData", meta= (BlueprintThreadSafe = "true"))
-	bool IsStarting();
+	bool IsStarting() const;
 
 	UFUNCTION(BlueprintPure, Category = "AnimData|LocomotionData", meta= (BlueprintThreadSafe = "true"))
-	bool IsMoving();
+	bool IsMoving() const;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData")
 	bool bIsPivoting;
@@ -74,13 +75,14 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AnimData|LocomotionData")
 	FPoseSearchTrajectoryData TrajectoryData_Moving;
-
-
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AnimData|LocomotionData")
 	float PreviousDesiredControllerYaw;
+
+
+private:
+	float PivotingAngleToCheck = 0.f;
+
 	
-
-
 	
 };

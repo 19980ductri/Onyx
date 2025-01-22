@@ -11,17 +11,25 @@ class AOnyxCharacterBase;
 
 
 UENUM(Blueprintable, BlueprintType)
-enum ERotationMode
+enum class ERotationMode : uint8
 {
 	OrientationToMovement,
 	Strafing
 };
 
 UENUM(Blueprintable, BlueprintType)
-enum EMovementState
+enum class EMovementState : uint8
 {
 	Idle,
 	Moving
+};
+
+UENUM(Blueprintable, BlueprintType)
+enum class EAnimMovementMode : uint8
+{
+	OnGround,
+	InAir,
+	None
 };
 
 
@@ -40,9 +48,9 @@ public:
 protected:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, meta=(BlueprintThreadSafe = "true"))
-	FVector CalculateRelativeAccelerationAmount();
+	FVector CalculateRelativeAccelerationAmount() const;
 
-	void UpdateMovementState();
+	virtual void UpdateStates();
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
 	FVector VelocityLastFrame;
@@ -69,17 +77,25 @@ protected:
 	float LocomotionDirection;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
-	TEnumAsByte<ERotationMode> RotationMode;
-
+	ERotationMode CurrentRotationMode;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
-	TEnumAsByte<EMovementState> MovementState;
+	ERotationMode LastFrameRotationMode;
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
+	EMovementState  CurrentMovementState;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
+	EMovementState LastFrameMovementState;
+		
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
+	EAnimMovementMode CurrentMovementMode;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
+	EAnimMovementMode  LastFrameMovementMode;
 	
 	UPROPERTY()
 	AOnyxCharacterBase* OwningCharacter;
 
 	UPROPERTY()
-	UCharacterMovementComponent* OwningCharacterMovement;
+	UCharacterMovementComponent* OwningCharacterMovementComponent;
 
 	
 };

@@ -4,7 +4,10 @@
 #include "AnimInstance/OnyxHeroAnimInstance.h"
 
 #include "Characters/OnyxPlayerCharacter.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+
+
 
 void UOnyxHeroAnimInstance::NativeInitializeAnimation()
 {
@@ -16,6 +19,45 @@ void UOnyxHeroAnimInstance::NativeInitializeAnimation()
 	}
 }
 
+void UOnyxHeroAnimInstance::UpdateStates()
+{
+	LastFrameMovementMode = CurrentMovementMode;
+	switch (OwningCharacterMovementComponent->MovementMode)
+	{
+	case MOVE_None:
+	case MOVE_Walking:
+	case MOVE_NavWalking:
+		CurrentMovementMode = EAnimMovementMode::OnGround;
+		break;
+		
+	case MOVE_Flying:
+	case MOVE_Falling:
+		CurrentMovementMode = EAnimMovementMode::InAir;
+		break;
+		
+	case MOVE_Swimming:
+	case MOVE_Custom:
+		CurrentMovementMode = EAnimMovementMode::None;
+		break;
+		
+	default:
+		break;
+	}
+
+	LastFrameRotationMode = CurrentRotationMode;
+	if (OwningCharacterMovementComponent->bOrientRotationToMovement == true)
+	{
+		CurrentRotationMode = ERotationMode::OrientationToMovement;
+	}
+	else
+	{
+		CurrentRotationMode = ERotationMode::Strafing;
+	}
+	
+	LastFrameMovementState = CurrentMovementState;
+	CurrentMovementState = IsMoving() ? EMovementState::Moving : EMovementState::Idle;
+}
+
 void UOnyxHeroAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeThreadSafeUpdateAnimation(DeltaSeconds);
@@ -25,7 +67,7 @@ void UOnyxHeroAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
 	}
 	UpdateTrajectory(DeltaSeconds);
 	UpdateMotionMatchingEssentialValues(DeltaSeconds);
-	MovementState = IsMoving() ? Moving : Idle;
+	UpdateStates();
 }
 
 void UOnyxHeroAnimInstance::UpdateTrajectory(float DeltaSeconds)
@@ -72,17 +114,16 @@ void UOnyxHeroAnimInstance::UpdateMotionMatchingEssentialValues(float DeltaSecon
 
 bool UOnyxHeroAnimInstance::IsPivoting()
 {
-	float AngleToCheck = 0;
-	if (RotationMode == ERotationMode::OrientationToMovement)
+	if (CurrentRotationMode == ERotationMode::OrientationToMovement)
 	{
-		AngleToCheck = 45.f;
+		PivotingAngleToCheck = 45.f;
 	}
-	else if (RotationMode == ERotationMode::Strafing)
+	else if (CurrentRotationMode == ERotationMode::Strafing)
 	{
-		AngleToCheck = 30.f;
+		PivotingAngleToCheck = 30.f;
 	}
 
-	bool bCanBePivoting = UKismetMathLibrary::Abs(GetTrajectoryTurnAngle()) >= AngleToCheck;
+	bool bCanBePivoting = UKismetMathLibrary::Abs(GetTrajectoryTurnAngle()) >= PivotingAngleToCheck;
 	
 	if (IsMoving() && bCanBePivoting)
 	{
@@ -91,7 +132,7 @@ bool UOnyxHeroAnimInstance::IsPivoting()
 	return false;
 }
 
-bool UOnyxHeroAnimInstance::IsStarting()
+bool UOnyxHeroAnimInstance::IsStarting() const
 {
 	bool bHavingAttemptToMove = false;
 
@@ -115,7 +156,7 @@ bool UOnyxHeroAnimInstance::IsStarting()
 	}
 }
 
-bool UOnyxHeroAnimInstance::IsMoving()
+bool UOnyxHeroAnimInstance::IsMoving() const
 {
 	const bool bHasVelocity = UKismetMathLibrary::NotEqual_VectorVector(Velocity, FVector::Zero(), 0.1);
 	const bool bHasFutureTrajectoryVelocity = UKismetMathLibrary::NotEqual_VectorVector(TrajectoryFutureVelocity, FVector::Zero(), 10.f);
