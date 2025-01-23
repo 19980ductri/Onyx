@@ -35,7 +35,7 @@ void UOnyxCharacterAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeco
 
 	
 	const FTransform OffsetRootTrans = UAnimationWarpingLibrary::GetOffsetRootTransform(OffsetNode);
-	const FRotator OffsetRootRotation =  FRotator(OffsetRootTrans.Rotator().Roll, OffsetRootTrans.Rotator().Pitch, OffsetRootTrans.Rotator().Yaw + 90.f);
+	const FRotator OffsetRootRotation =  FRotator(OffsetRootTrans.Rotator().Pitch, OffsetRootTrans.Rotator().Yaw + 90.f, OffsetRootTrans.Rotator().Roll);
 	RootTransform = UKismetMathLibrary::MakeTransform(OffsetRootTrans.GetLocation(), OffsetRootRotation);
 	
 	LocomotionDirection = UKismetAnimationLibrary::CalculateDirection(OwningCharacter->GetVelocity(), OwningCharacter->GetActorRotation());
