@@ -42,17 +42,18 @@ void UOnyxCharacterAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeco
 	CurrentRotationMode = ERotationMode::OrientationToMovement;
 	AccelerationLastFrame = Acceleration;
 	Acceleration = OwningCharacterMovementComponent->GetCurrentAcceleration();
-
+	bHasAcceleration = OwningCharacterMovementComponent->GetCurrentAcceleration().SizeSquared2D() > 0.f;
 	
 	
 	VelocityLastFrame = Velocity;
 	Velocity = OwningCharacterMovementComponent->Velocity;
 	VelocityAcceleration = (Velocity - VelocityLastFrame) / UKismetMathLibrary::FMax(DeltaSeconds, 0.001f);
-	
-	
 	GroundSpeed = OwningCharacter->GetVelocity().Size2D();
-	bHasAcceleration = OwningCharacterMovementComponent->GetCurrentAcceleration().SizeSquared2D() > 0.f;
-	
+	bHasVelocity = GroundSpeed > 5.f;
+	if (bHasVelocity)
+	{
+		LastNonZeroVelocity = Velocity;
+	}
 }
 
 void UOnyxCharacterAnimInstance::UpdateStates()

@@ -158,10 +158,10 @@ bool UOnyxHeroAnimInstance::IsStarting() const
 
 bool UOnyxHeroAnimInstance::IsMoving() const
 {
-	const bool bHasVelocity = UKismetMathLibrary::NotEqual_VectorVector(Velocity, FVector::Zero(), 0.1);
+	const bool HasVelocity = UKismetMathLibrary::NotEqual_VectorVector(Velocity, FVector::Zero(), 0.1);
 	const bool bHasFutureTrajectoryVelocity = UKismetMathLibrary::NotEqual_VectorVector(TrajectoryFutureVelocity, FVector::Zero(), 10.f);
 	const bool bHavingAccel = UKismetMathLibrary::NotEqual_VectorVector(Acceleration, FVector::Zero(), 0.f);
-	if (bHasVelocity && bHasFutureTrajectoryVelocity && bHasAcceleration)
+	if (HasVelocity && bHasFutureTrajectoryVelocity && bHasAcceleration)
 	{
 		return true;
 	}
@@ -173,13 +173,13 @@ bool UOnyxHeroAnimInstance::ShouldTurnInPlace() const
 	FRotator DeltaRot = UKismetMathLibrary::NormalizedDeltaRotator(CharacterTransform.Rotator(), RootTransform.Rotator());
 	float AbsoluteDeltaYaw = UKismetMathLibrary::Abs(DeltaRot.Yaw);
 
-	if (GEngine)
+	/*if (GEngine)
 	{
 		GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Green, FString::Printf(TEXT("CharacterTransform.Rotator(): %s"), *CharacterTransform.Rotator().ToString()));
 		GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Cyan, FString::Printf(TEXT("RootTransform.Rotator(): %s"), *RootTransform.Rotator().ToString()));
 		GEngine->AddOnScreenDebugMessage(2, 5.f, FColor::Yellow, FString::Printf(TEXT("DeltaRot: %s"), *DeltaRot.ToString()));
 		GEngine->AddOnScreenDebugMessage(3, 5.f, FColor::Red, FString::Printf(TEXT("AbsoluteDeltaYaw: %.2f"), AbsoluteDeltaYaw));
-	}
+	}*/
 
 	
 	if (AbsoluteDeltaYaw >= 50.f)

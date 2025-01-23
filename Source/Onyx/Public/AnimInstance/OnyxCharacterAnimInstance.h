@@ -45,13 +45,16 @@ public:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeThreadSafeUpdateAnimation(float DeltaSeconds) override;
 
-	
+
 protected:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, meta=(BlueprintThreadSafe = "true"))
 	FVector CalculateRelativeAccelerationAmount() const;
 
 	virtual void UpdateStates();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
+	FVector LastNonZeroVelocity;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
 	FVector VelocityLastFrame;
@@ -64,6 +67,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData")
 	FVector VelocityAcceleration;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData")
+	bool bHasVelocity;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
 	FVector Acceleration;
