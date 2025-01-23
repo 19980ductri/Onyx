@@ -21,3 +21,6 @@ protected:
 	bool DoesOwnerHaveTag(const FGameplayTag& Tag) const;
 	
 };
+
+
+              

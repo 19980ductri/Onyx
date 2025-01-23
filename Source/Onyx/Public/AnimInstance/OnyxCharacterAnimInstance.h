@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "OnyxAnimInstanceBase.h"
+#include "Animation/AnimNodeReference.h"
 #include "OnyxCharacterAnimInstance.generated.h"
 
 class UCharacterMovementComponent;
@@ -54,6 +55,9 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
 	FVector VelocityLastFrame;
+
+	UPROPERTY(BlueprintReadWrite, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
+	FAnimNodeReference OffsetNode;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
 	FVector Velocity;
@@ -90,12 +94,22 @@ protected:
 	EAnimMovementMode CurrentMovementMode;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData", meta = (AllowPrivateAccess = "true"))
 	EAnimMovementMode  LastFrameMovementMode;
+
+
 	
 	UPROPERTY()
 	AOnyxCharacterBase* OwningCharacter;
 
 	UPROPERTY()
 	UCharacterMovementComponent* OwningCharacterMovementComponent;
+		
+
+	FTransform CharacterTransform;
+	FTransform LastFrameCharacterTransform;
+
+	FTransform RootTransform;
+	
+	
 
 	
 };

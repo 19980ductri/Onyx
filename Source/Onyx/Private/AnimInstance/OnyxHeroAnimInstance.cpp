@@ -141,17 +141,17 @@ bool UOnyxHeroAnimInstance::IsStarting() const
 		bHavingAttemptToMove = true;
 	}
 	
-	GEngine->AddOnScreenDebugMessage(0, 1.f, FColor::Yellow, FString::Printf(TEXT("TrajectoryFutureVelocity: %f"), TrajectoryFutureVelocity.Size2D()));
-	GEngine->AddOnScreenDebugMessage(1, 1.f, FColor::Yellow, FString::Printf(TEXT("Veloctity: %f"),  Velocity.Size2D() + 100.f));
+	//GEngine->AddOnScreenDebugMessage(0, 1.f, FColor::Yellow, FString::Printf(TEXT("TrajectoryFutureVelocity: %f"), TrajectoryFutureVelocity.Size2D()));
+	//GEngine->AddOnScreenDebugMessage(1, 1.f, FColor::Yellow, FString::Printf(TEXT("Veloctity: %f"),  Velocity.Size2D() + 100.f));
 	
 	if (IsMoving() && bHavingAttemptToMove)
 	{
-		GEngine->AddOnScreenDebugMessage(2, 1.f, FColor::Yellow, FString::Printf(TEXT("is starting: true")));
+		//GEngine->AddOnScreenDebugMessage(2, 1.f, FColor::Yellow, FString::Printf(TEXT("is starting: true")));
 		return true;
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(2, 1.f, FColor::Yellow, FString::Printf(TEXT("is starting: false")));
+		//GEngine->AddOnScreenDebugMessage(2, 1.f, FColor::Yellow, FString::Printf(TEXT("is starting: false")));
 		return false;	
 	}
 }
@@ -167,3 +167,25 @@ bool UOnyxHeroAnimInstance::IsMoving() const
 	}
 	return false;
 }
+
+bool UOnyxHeroAnimInstance::ShouldTurnInPlace() const
+{
+	FRotator DeltaRot = UKismetMathLibrary::NormalizedDeltaRotator(CharacterTransform.Rotator(), RootTransform.Rotator());
+	float AbsoluteDeltaYaw = UKismetMathLibrary::Abs(DeltaRot.Yaw);
+
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Green, FString::Printf(TEXT("CharacterTransform.Rotator(): %s"), *CharacterTransform.Rotator().ToString()));
+		GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Cyan, FString::Printf(TEXT("RootTransform.Rotator(): %s"), *RootTransform.Rotator().ToString()));
+		GEngine->AddOnScreenDebugMessage(2, 5.f, FColor::Yellow, FString::Printf(TEXT("DeltaRot: %s"), *DeltaRot.ToString()));
+		GEngine->AddOnScreenDebugMessage(3, 5.f, FColor::Red, FString::Printf(TEXT("AbsoluteDeltaYaw: %.2f"), AbsoluteDeltaYaw));
+	}
+
+	
+	if (AbsoluteDeltaYaw >= 50.f)
+	{
+		return true;
+	}
+	return false;
+}
+

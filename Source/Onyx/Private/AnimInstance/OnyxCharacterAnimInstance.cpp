@@ -5,6 +5,7 @@
 #include "KismetAnimationLibrary.h"
 #include "Characters/OnyxCharacterBase.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "AnimationWarpingLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
 
 void UOnyxCharacterAnimInstance::NativeInitializeAnimation()
@@ -28,6 +29,15 @@ void UOnyxCharacterAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeco
 	{
 		return;
 	}
+
+	LastFrameCharacterTransform = CharacterTransform;
+	CharacterTransform = OwningCharacter->GetActorTransform();
+
+	
+	const FTransform OffsetRootTrans = UAnimationWarpingLibrary::GetOffsetRootTransform(OffsetNode);
+	const FRotator OffsetRootRotation =  FRotator(OffsetRootTrans.Rotator().Roll, OffsetRootTrans.Rotator().Pitch, OffsetRootTrans.Rotator().Yaw + 90.f);
+	RootTransform = UKismetMathLibrary::MakeTransform(OffsetRootTrans.GetLocation(), OffsetRootRotation);
+	
 	LocomotionDirection = UKismetAnimationLibrary::CalculateDirection(OwningCharacter->GetVelocity(), OwningCharacter->GetActorRotation());
 	CurrentRotationMode = ERotationMode::OrientationToMovement;
 	AccelerationLastFrame = Acceleration;

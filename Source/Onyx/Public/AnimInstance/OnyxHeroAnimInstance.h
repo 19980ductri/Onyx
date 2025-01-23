@@ -60,6 +60,9 @@ protected:
 	UFUNCTION(BlueprintPure, Category = "AnimData|LocomotionData", meta= (BlueprintThreadSafe = "true"))
 	bool IsMoving() const;
 
+	UFUNCTION(BlueprintPure, Category = "AnimData|LocomotionData", meta= (BlueprintThreadSafe = "true"))
+	bool ShouldTurnInPlace() const;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData")
 	bool bIsPivoting;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AnimData|LocomotionData")
@@ -78,11 +81,10 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AnimData|LocomotionData")
 	float PreviousDesiredControllerYaw;
-
+	
 
 private:
 	float PivotingAngleToCheck = 0.f;
 
-	
 	
 };
